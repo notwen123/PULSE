@@ -8,6 +8,7 @@ import { toVerifyJson } from "@/lib/api/verify";
 import { formatCompactMoney, formatMoney, formatUtcTime } from "@/lib/format";
 import type { Passport } from "@/lib/types";
 import { Hero } from "@/components/landing/hero";
+import { RepresentationsObject } from "@/components/landing/representations-object";
 import { Parallax, Reveal } from "@/components/landing/reveal";
 import { IdentityGraph } from "@/components/rwa/identity-graph";
 import { ReceiptDocument, TruthReceipt } from "@/components/receipt/truth-receipt";
@@ -89,7 +90,7 @@ export default async function Landing() {
 
   return (
     <div className="overflow-x-clip">
-      <Hero featured={featured} mode={mode} />
+      <Hero mode={mode} />
 
       <div className="mx-auto flex max-w-7xl flex-col gap-40 px-4 pt-16 sm:px-6 lg:px-10">
         {/* 01 — Representations */}
@@ -99,7 +100,7 @@ export default async function Landing() {
             look almost identical.
           </SectionHead>
           {featured ? (
-            <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+            <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
               <Reveal>
                 <ul className="flex flex-wrap gap-2">
                   {featured.tokens.map((t, i) => (
@@ -116,8 +117,10 @@ export default async function Landing() {
                   ))}
                 </ul>
               </Reveal>
-              <Reveal delay={0.15} className="flex items-center gap-5">
-                <ArrowRight className="size-8 shrink-0 text-muted-foreground" strokeWidth={1} />
+              <Reveal delay={0.15} className="flex flex-col gap-4">
+                <RepresentationsObject
+                  tokens={featured.tokens.map((t) => ({ symbol: t.symbol ?? `#${t.cryptoId}`, issuer: t.issuer?.name ?? null }))}
+                />
                 <div>
                   <p className="eyebrow">All {featured.tokens.length} point back to</p>
                   <p className="display mt-1 text-5xl">{featured.profile.name}</p>
