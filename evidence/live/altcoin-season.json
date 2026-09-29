@@ -1,0 +1,26 @@
+{
+  "_note": "LIVE CMC RESPONSE captured by scripts/capture-evidence.mjs. API key omitted.",
+  "request": "GET /v1/altcoin-season-index/latest",
+  "httpStatus": 200,
+  "capturedAt": "2026-09-29T15:24:00.771Z",
+  "sha256": "6a3df50594b97ff02cca7497d5ef26830edf00f887a39d8f62a9934f1657ca07",
+  "response": {
+    "data": {
+      "altcoin_index": 60,
+      "altcoin_marketcap": 1186716297561.69,
+      "snapshot_time": "2026-09-29T15:22:57Z",
+      "yearly_high": 67,
+      "yearly_high_date": "2025-10-02",
+      "yearly_low": 14,
+      "yearly_low_date": "2025-12-19"
+    },
+    "status": {
+      "timestamp": "2026-09-29T15:24:00.649Z",
+      "error_code": 0,
+      "error_message": null,
+      "elapsed": 3,
+      "credit_count": 1,
+      "notice": null
+    }
+  }
+}

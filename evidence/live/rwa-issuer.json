@@ -1,0 +1,87 @@
+{
+  "_note": "LIVE CMC RESPONSE captured by scripts/capture-evidence.mjs. API key omitted.",
+  "request": "GET /v5/real-world-assets/issuers?issuer_id=6a2d54b697c45356b1a634f4",
+  "httpStatus": 200,
+  "capturedAt": "2026-09-29T15:23:59.050Z",
+  "sha256": "3cc49b58936c81f4b8c7bd7945a51497400c306d57cd7f3b2b00fe71edc41f49",
+  "response": {
+    "data": {
+      "name": "Backpack",
+      "website": "https://backpack.exchange",
+      "logo": "https://s2.coinmarketcap.com/static/img/issuer/M7sS2GzR_400x400.png",
+      "tokens": [
+        {
+          "name": "SpaceX tokenized stock (Backpack)",
+          "symbol": "SPCX",
+          "crypto_id": 40238,
+          "rwa_id": 9
+        },
+        {
+          "name": "SanDisk Corp tokenized stock (Backpack)",
+          "symbol": "SNDK",
+          "crypto_id": 40815,
+          "rwa_id": 48
+        },
+        {
+          "name": "RoboStrategy Inc tokenized stock (Backpack)",
+          "symbol": "BOT",
+          "crypto_id": 40816,
+          "rwa_id": null
+        },
+        {
+          "name": "Micron Technology Inc tokenized stock (Backpack)",
+          "symbol": "MU",
+          "crypto_id": 40817,
+          "rwa_id": 12
+        },
+        {
+          "name": "SK Hynix tokenized stock (Backpack)",
+          "symbol": "SKHY",
+          "crypto_id": 40833,
+          "rwa_id": 8065
+        },
+        {
+          "name": "AMC Entertainment Holdings Tokenized Stock (Backpack Securities)",
+          "symbol": "AMC",
+          "crypto_id": 42024,
+          "rwa_id": 153
+        },
+        {
+          "name": "1-800-Flowers.Com tokenized stock (Backpack)",
+          "symbol": "FLWS",
+          "crypto_id": 42305,
+          "rwa_id": null
+        },
+        {
+          "name": "Southwest Airlines Co tokenized stock (Backpack)",
+          "symbol": "LUV",
+          "crypto_id": 42364,
+          "rwa_id": 807
+        },
+        {
+          "name": "ishares MSCI South Korea tokenized ETF (Backpack)",
+          "symbol": "EWY",
+          "crypto_id": 42375,
+          "rwa_id": 1062
+        },
+        {
+          "name": "Nokia Oyj (Backpack)",
+          "symbol": "NOK",
+          "crypto_id": 42376,
+          "rwa_id": 1588
+        }
+      ],
+      "issuer_id": "6a2d54b697c45356b1a634f4",
+      "num_tokens": 10,
+      "total_size": 10,
+      "has_more": false
+    },
+    "status": {
+      "timestamp": "2026-09-29T15:23:58.914Z",
+      "error_code": "0",
+      "error_message": "",
+      "elapsed": 3,
+      "credit_count": 1
+    }
+  }
+}

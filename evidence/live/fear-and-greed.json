@@ -1,0 +1,21 @@
+{
+  "_note": "LIVE CMC RESPONSE captured by scripts/capture-evidence.mjs. API key omitted.",
+  "request": "GET /v3/fear-and-greed/latest",
+  "httpStatus": 200,
+  "capturedAt": "2026-09-29T15:24:00.074Z",
+  "sha256": "5274cecc341dc92628be31b107bc0019ee44881eeaf2420fb3aeebffe49c3b08",
+  "response": {
+    "data": {
+      "value": 68,
+      "update_time": "2026-09-29T15:23:10.022Z",
+      "value_classification": "Greed"
+    },
+    "status": {
+      "timestamp": "2026-09-29T15:23:59.940Z",
+      "error_code": "0",
+      "error_message": "",
+      "elapsed": 3,
+      "credit_count": 1
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "_note": "SANITIZED EXAMPLE RESPONSE — shape and values from CoinMarketCap public documentation examples. Not a live response. Run `npm run evidence` with CMC_API_KEY set to capture real responses into evidence/live/.",
+  "request": "GET /v5/real-world-assets/map?symbol=SPCX",
+  "response": {
+    "data": {
+      "rwa_assets": [
+        { "rwa_id": 9, "name": "SpaceX", "symbol": "SPCX", "slug": "spacex", "asset_type": "stock", "rwa_rank": 7, "has_tokens": true }
+      ],
+      "total_size": 1,
+      "has_more": false
+    },
+    "status": { "error_code": "0", "credit_count": 0 }
+  }
+}

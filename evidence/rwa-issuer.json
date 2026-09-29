@@ -1,0 +1,13 @@
+{
+  "_note": "SANITIZED EXAMPLE RESPONSE — shape and values from CoinMarketCap public documentation examples. Not a live response. Run `npm run evidence` with CMC_API_KEY set to capture real responses into evidence/live/.",
+  "request": "GET /v5/real-world-assets/issuers?issuer_id=6a2d54b697c45356b1a634f4",
+  "response": {
+    "data": {
+      "issuer_id": "6a2d54b697c45356b1a634f4",
+      "name": "Backpack",
+      "num_tokens": 1,
+      "tokens": [{ "crypto_id": 40238, "name": "SpaceX tokenized stock (Backpack)", "symbol": "SPCX", "rwa_id": 9 }]
+    },
+    "status": { "error_code": "0", "credit_count": 1 }
+  }
+}

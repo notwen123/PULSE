@@ -1,0 +1,16 @@
+{
+  "_note": "SANITIZED EXAMPLE RESPONSE — shape and values from CoinMarketCap public documentation examples. Not a live response. Run `npm run evidence` with CMC_API_KEY set to capture real responses into evidence/live/.",
+  "request": "GET /v5/real-world-assets/quotes/latest?rwa_id=1",
+  "response_excerpt": {
+    "name": "GOLD", "symbol": "GOLD", "slug": "gold",
+    "rwa_id": 1, "asset_type": "commodity", "rwa_rank": 1, "has_tokens": true,
+    "average_tokenized_price": 4018.181479970762,
+    "tokenized_market_cap": 1884879975.1722481,
+    "tokenized_volume_24h": 139285845.1274847,
+    "tokens": [
+      { "symbol": "PAXG", "name": "PAX Gold", "price": 4024.36, "crypto_id": 4705, "market_cap": 1806493532.83 },
+      { "symbol": "XAUM", "name": "Matrixdock Gold", "price": 4030.17, "crypto_id": 34212, "market_cap": 45234553.51 }
+    ],
+    "tradfi_markets": []
+  }
+}

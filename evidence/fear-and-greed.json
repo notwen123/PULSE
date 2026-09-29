@@ -1,0 +1,5 @@
+{
+  "_note": "SANITIZED EXAMPLE RESPONSE — field names as documented for /v3/fear-and-greed/latest; values illustrative. Not a live response.",
+  "request": "GET /v3/fear-and-greed/latest",
+  "response": { "data": { "value": 72, "value_classification": "Greed", "update_time": "2026-09-29T00:00:00.000Z" }, "status": { "error_code": 0, "credit_count": 1 } }
+}

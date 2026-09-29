@@ -1,0 +1,41 @@
+{
+  "_note": "LIVE CMC RESPONSE captured by scripts/capture-evidence.mjs. API key omitted.",
+  "request": "GET /v5/real-world-assets/info?symbol=SPCX",
+  "httpStatus": 200,
+  "capturedAt": "2026-09-29T15:23:55.978Z",
+  "sha256": "6ee1f4e05ef1a76ad7bddf0f15365eeff86268a08531aac453f5329fc8cae12f",
+  "response": {
+    "data": {
+      "rwa_assets": [
+        {
+          "name": "SpaceX",
+          "symbol": "SPCX",
+          "slug": "spacex",
+          "website": "https://www.spacex.com/",
+          "employees": 10088,
+          "founded": "2002-03-14",
+          "industry": "Guided Missiles & Space Vehicles & Parts",
+          "cik": null,
+          "about": {
+            "description": null,
+            "logo": null,
+            "website": "https://www.spacex.com/",
+            "date_added": "2026-04-29T07:39:00.000Z"
+          },
+          "rwa_id": 9,
+          "asset_type": "stock",
+          "rwa_rank": 9,
+          "has_tokens": true,
+          "primary_exchange": null
+        }
+      ]
+    },
+    "status": {
+      "timestamp": "2026-09-29T15:23:55.758Z",
+      "error_code": "0",
+      "error_message": "",
+      "elapsed": 4,
+      "credit_count": 1
+    }
+  }
+}
