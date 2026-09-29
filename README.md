@@ -135,3 +135,9 @@ PULSE describes CMC-sourced data. It makes no buy or sell recommendations and co
 ## License and attribution
 
 MIT, see [LICENSE](LICENSE). This repository began as an open-source, MIT-licensed Next.js + shadcn/ui crypto dashboard built on CoinGecko. Its App Router scaffold, Tailwind setup, shadcn primitives (`sheet`, `skeleton`, `sonner`), theme provider and currency-cookie pattern were kept. The CoinGecko data layer, pages and components were removed and replaced by the CMC RWA product described above. Market data is provided by CoinMarketCap.
+
+## Deploying to Vercel
+
+1. Import the GitHub repo at [vercel.com/new](https://vercel.com/new). Vercel detects Next.js; `vercel.json` pins the framework and the `iad1` region.
+2. Add the environment variable `CMC_API_KEY` (Production and Preview). Leave `CMC_API_BASE_URL` unset.
+3. Deploy. Without the key, the site still works but RWA pages show labelled DEMO DATA.
