@@ -2,8 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { MotionProvider } from "@/components/providers/motion-provider";
-import { SiteHeader } from "@/components/layout/site-header";
-import { SiteFooter } from "@/components/layout/site-footer";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -38,11 +36,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:rounded-full focus:bg-foreground focus:px-4 focus:py-2 focus:text-background">
               Skip to content
             </a>
-            <SiteHeader />
-            <main id="main" className="min-h-[70vh]">
-              {children}
-            </main>
-            <SiteFooter />
+            {children}
             <Toaster position="bottom-right" />
           </MotionProvider>
         </ThemeProvider>

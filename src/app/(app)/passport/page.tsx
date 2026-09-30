@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { searchRwa } from "@/lib/api/rwa";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { RwaSearch } from "@/components/rwa/rwa-search";
@@ -13,12 +15,29 @@ const STEPS = [
   ["Verify", "Every important number opens its receipt."],
 ];
 
-export default function ExplorePage() {
+type Props = { searchParams: Promise<{ q?: string }> };
+
+/** /passport?q=TSLA resolves through the RWA ID Map and opens the best match. */
+async function resolve(q: string): Promise<number | null> {
+  try {
+    const { results } = await searchRwa(q.slice(0, 64));
+    return (results.find((r) => r.symbol.toUpperCase() === q.toUpperCase()) ?? results[0])?.rwaId ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export default async function ExplorePage({ searchParams }: Props) {
+  const { q } = await searchParams;
+  const hit = q?.trim() ? await resolve(q.trim()) : null;
+  if (hit) redirect(`/passport/${hit}`);
+
   return (
     <div className="mx-auto flex max-w-7xl flex-col gap-16 px-4 py-14 sm:px-6 sm:py-20 lg:px-10">
       <header className="flex flex-col gap-8">
         <p className="eyebrow">Explore · RWA Passport</p>
         <h1 className="display max-w-4xl text-6xl leading-[0.92] sm:text-8xl">Search the world’s tokenized assets.</h1>
+        {q && !hit && <p className="text-sm text-muted-foreground">No RWA matches “{q}”. Try another ticker or name.</p>}
         <RwaSearch autoFocus />
         <RecentAssets />
       </header>

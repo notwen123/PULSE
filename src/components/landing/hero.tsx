@@ -1,245 +1,266 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
-import { ArrowRight, Check, Loader2, Search } from "lucide-react";
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
+import { ArrowRight } from "lucide-react";
+import { TruthReceipt } from "@/components/receipt/truth-receipt";
 import { Verified } from "@/components/verified";
 import { useReducedMotion } from "@/hooks/use-media";
-import { ASSET_TYPE_LABEL, formatMoney } from "@/lib/format";
+import { assetLogo } from "@/lib/asset-logos";
+import { ASSET_TYPE_LABEL, formatMoney, shortHash } from "@/lib/format";
 import type { DataMode, Passport } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-const EXAMPLES = ["TSLA", "NVDA", "GOLD", "SPCX", "Apple"];
+const TRY = ["TSLA", "GOLD", "NVDA", "SPCX"];
 
-type Stage =
-  | { s: "idle" }
-  | { s: "resolving"; q: string }
-  | { s: "loading"; q: string; rwaId: number; symbol: string; name: string }
-  | { s: "done"; q: string; passport: Passport }
-  | { s: "error"; q: string; message: string };
-
-function Step({ n, label, children, done, active }: { n: string; label: string; children?: React.ReactNode; done: boolean; active: boolean }) {
+/** One annotation in the right-hand column: dot and leader line pointing back at the object. */
+function Note({ label, children, className, delay = 0 }: { label: string; children?: React.ReactNode; className?: string; delay?: number }) {
   return (
-    <motion.li
-      initial={{ opacity: 0, x: -6 }}
+    <motion.div
+      initial={{ opacity: 0, x: 10 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.35, ease: [0.2, 0.7, 0.2, 1] }}
-      className="grid grid-cols-[1.75rem_6.5rem_1fr] items-baseline gap-2 border-b border-dotted py-2 text-sm last:border-b-0"
+      transition={{ duration: 0.7, delay, ease: [0.2, 0.7, 0.2, 1] }}
+      className={cn("absolute left-0 flex flex-col gap-1.5", className)}
     >
-      <span className="font-mono text-[10px] text-muted-foreground">{n}</span>
-      <span className="eyebrow flex items-center gap-1.5">
-        {done ? <Check className="size-3 text-pulse" strokeWidth={3} /> : active ? <Loader2 className="size-3 animate-spin" /> : null}
-        {label}
+      <span className="flex items-center gap-2 whitespace-nowrap">
+        <span className="size-1.5 shrink-0 rounded-full bg-foreground" />
+        <span className="h-px w-8 bg-foreground/50" />
+        <span className="font-mono text-[10px] font-medium tracking-[0.18em] text-foreground/80 uppercase">{label}</span>
       </span>
-      <span className="min-w-0 truncate">{children}</span>
-    </motion.li>
+      <div className="flex flex-col gap-1.5 pl-[3.25rem]">{children}</div>
+    </motion.div>
   );
 }
 
-export function Hero({ mode }: { mode: DataMode }) {
-  const router = useRouter();
+/** Real data, drawn quietly: each tracked token's price as a dot, the aggregate as a tick. */
+function PriceStrip({ prices, aggregate }: { prices: number[]; aggregate: number | null }) {
+  if (prices.length < 2 || aggregate == null) return null;
+  const lo = Math.min(...prices, aggregate);
+  const hi = Math.max(...prices, aggregate);
+  const x = (v: number) => (hi === lo ? 60 : 4 + ((v - lo) / (hi - lo)) * 112);
+  return (
+    <svg viewBox="0 0 120 22" className="h-5 w-28" aria-label={`${prices.length} token prices around the aggregate`}>
+      <line x1="4" x2="116" y1="11" y2="11" className="stroke-foreground/25" strokeWidth="1" />
+      {prices.map((p, i) => (
+        <circle key={i} cx={x(p)} cy={11} r="2.2" className="fill-foreground/70" />
+      ))}
+      <line x1={x(aggregate)} x2={x(aggregate)} y1="3" y2="19" className="stroke-pulse" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
+/** The identity artifact: a glass asset card on a stone pedestal. Tilts with the pointer. */
+function Artifact({ p }: { p: Passport }) {
   const reduced = useReducedMotion();
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rx = useSpring(useTransform(my, [-0.5, 0.5], [6, -6]), { stiffness: 120, damping: 18 });
+  const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-9, 9]), { stiffness: 120, damping: 18 });
+  const px = useSpring(useTransform(mx, [-0.5, 0.5], [-8, 8]), { stiffness: 80, damping: 20 });
+
+  const { profile, aggregate, tokens, issuers, chains } = p;
+  const logo = assetLogo(profile.symbol, profile.logo);
+  const price = aggregate ? formatMoney(aggregate.averageTokenizedPrice, p.currency) : null;
+  const prices = tokens.map((t) => t.price).filter((v): v is number => v != null);
+
+  const stone = "bg-gradient-to-r from-[#121512] via-[#353c36] to-[#101310]";
+  return (
+    <div className="flex flex-col gap-6">
+      <div
+        className="relative mx-auto aspect-[10/9] w-full max-w-[40rem] [perspective:1200px]"
+        onPointerMove={(e) => {
+          if (reduced) return;
+          const r = e.currentTarget.getBoundingClientRect();
+          mx.set((e.clientX - r.left) / r.width - 0.5);
+          my.set((e.clientY - r.top) / r.height - 0.5);
+        }}
+        onPointerLeave={() => {
+          mx.set(0);
+          my.set(0);
+        }}
+      >
+        {/* Object area: left 64% on sm+, full width on mobile */}
+        <div className="absolute inset-y-0 left-0 w-full sm:w-[64%]">
+          {/* Underlying asset label, above the card */}
+          <motion.p
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="absolute top-[4%] left-[4%] flex items-center gap-2 font-mono text-[10px] font-medium tracking-[0.18em] text-foreground/80 uppercase"
+          >
+            Underlying asset <span className="h-px w-10 bg-foreground/50" />
+            <span className="size-1.5 rounded-full bg-foreground" />
+          </motion.p>
+
+          {/* Pedestal: glass ring + stone cylinder with the RWA ID engraved */}
+          <motion.div style={{ x: px }} className="absolute inset-x-[14%] bottom-[5%] h-[36%]">
+            <div className="absolute -inset-x-[16%] top-[-2%] h-[30%] rounded-[50%] border border-foreground/20 bg-gradient-to-b from-white/40 to-transparent dark:from-white/5" />
+            <div className={cn("absolute inset-x-0 top-[13%] bottom-[13%]", stone)}>
+              <div className="absolute inset-0 opacity-50 mix-blend-overlay [background:repeating-linear-gradient(90deg,transparent_0_9px,rgba(255,255,255,0.07)_9px_10px)]" />
+              <p className="absolute inset-x-0 top-[40%] text-center font-mono text-[10px] tracking-[0.5em] text-white/60 sm:text-xs">RWA #{profile.rwaId}</p>
+            </div>
+            <div className={cn("absolute inset-x-0 bottom-0 h-[26%] rounded-[50%]", stone)} />
+            <div className="absolute inset-x-0 top-0 h-[26%] rounded-[50%] bg-[radial-gradient(ellipse_at_50%_45%,#6b736c,#1c211d_72%)] shadow-[inset_0_2px_8px_rgba(255,255,255,0.25)]" />
+            {/* stem */}
+            <div className="absolute top-[-44%] left-1/2 h-[58%] w-1.5 -translate-x-1/2 rounded-full bg-gradient-to-r from-zinc-400 via-zinc-100 to-zinc-500" />
+          </motion.div>
+
+          {/* Glass asset card */}
+          <motion.div
+            style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d" }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: [0.2, 0.7, 0.2, 1] }}
+            className="absolute inset-x-0 top-[13%] h-[33%]"
+          >
+            <div className="relative flex size-full items-center gap-4 overflow-hidden rounded-3xl border border-white/80 bg-white/45 px-6 shadow-[0_30px_60px_-30px_rgba(20,30,22,0.45),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-xl sm:gap-5 dark:border-white/15 dark:bg-white/10">
+              <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/70 via-transparent to-white/10 dark:from-white/10" />
+              <span className="pointer-events-none absolute -top-1/2 left-1/3 h-[200%] w-16 rotate-12 bg-white/30 blur-md" />
+              {logo ? (
+                <Image src={logo} alt="" width={72} height={72} className="relative size-12 shrink-0 rounded-2xl object-cover shadow-md sm:size-16" unoptimized={logo.startsWith("http")} />
+              ) : (
+                <span className="relative grid size-12 place-items-center rounded-2xl bg-foreground font-mono text-background sm:size-16">{profile.symbol.slice(0, 2)}</span>
+              )}
+              <div className="relative min-w-0">
+                <p className="display truncate text-[1.7rem] leading-none uppercase sm:text-[2.2rem]">{profile.name}</p>
+                <p className="mt-1.5 font-mono text-sm tracking-[0.2em] text-foreground/70">{profile.symbol}</p>
+                <p className="mt-1.5 font-mono text-[9px] tracking-[0.18em] text-foreground/50 uppercase">{ASSET_TYPE_LABEL[profile.assetType]} · real-world asset</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Annotation column — every value is real CMC data */}
+        <div className="absolute inset-y-0 left-[67%] hidden w-[33%] sm:block">
+          {aggregate && price && (
+            <Note label="Tokenized market" className="top-[14%]" delay={0.45}>
+              <TruthReceipt receipt={aggregate.receipts.averageTokenizedPrice} display={price} hideCue>
+                <span className="font-sans text-xl font-semibold tabular">{price}</span>
+              </TruthReceipt>
+              <PriceStrip prices={prices} aggregate={aggregate.averageTokenizedPrice} />
+              <Verified status={aggregate.receipts.averageTokenizedPrice.verificationStatus} />
+            </Note>
+          )}
+          <Note label="RWA identity" className="top-[54%]" delay={0.6}>
+            <span className="font-mono text-xs text-foreground/70">
+              rwa_id {profile.rwaId}
+              {profile.rank != null && ` · rank ${profile.rank}`}
+            </span>
+          </Note>
+          <Note label="Representations" className="top-[70%]" delay={0.75}>
+            <span className="font-mono text-xs leading-relaxed whitespace-nowrap text-foreground/70">
+              {tokens.length} tokens
+              <br />
+              {issuers.length} issuers · {chains.length} chains
+            </span>
+          </Note>
+          {aggregate && (
+            <Note label="Evidence" className="top-[88%]" delay={0.9}>
+              <span className="font-mono text-[11px] text-foreground/70">{shortHash(aggregate.receipts.averageTokenizedPrice.responseHash)}</span>
+            </Note>
+          )}
+        </div>
+      </div>
+
+      {/* Mobile: the same facts as a compact row */}
+      {aggregate && price && (
+        <dl className="grid grid-cols-3 gap-px overflow-hidden rounded-2xl border bg-border text-center sm:hidden">
+          <div className="bg-paper p-3">
+            <dt className="eyebrow">Tokenized</dt>
+            <dd className="mt-1 text-sm font-semibold tabular">{price}</dd>
+          </div>
+          <div className="bg-paper p-3">
+            <dt className="eyebrow">Identity</dt>
+            <dd className="mt-1 font-mono text-sm">#{profile.rwaId}</dd>
+          </div>
+          <div className="bg-paper p-3">
+            <dt className="eyebrow">Tokens</dt>
+            <dd className="mt-1 font-mono text-sm">{tokens.length}</dd>
+          </div>
+        </dl>
+      )}
+    </div>
+  );
+}
+
+export function Hero({ featured, mode }: { featured: Passport | null; mode: DataMode }) {
   const section = useRef<HTMLElement>(null);
-  const [q, setQ] = useState("");
-  const [stage, setStage] = useState<Stage>({ s: "idle" });
-
-  // Scroll-driven depth: the landscape sinks and scales slightly slower than the copy rises.
+  const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: section, offset: ["start start", "end start"] });
-  const copyY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : -80]);
-  const imgY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 140]);
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1.04, reduced ? 1.04 : 1.12]);
-
-  const decode = async (term: string) => {
-    const query = term.trim();
-    if (!query) return;
-    setQ(query);
-    setStage({ s: "resolving", q: query });
-    try {
-      const m = await fetch(`/api/rwa/map?q=${encodeURIComponent(query)}`).then((r) => r.json());
-      const hit = m.results?.[0];
-      if (!hit) return setStage({ s: "error", q: query, message: `No RWA matches “${query}” in CMC's RWA ID Map.` });
-      setStage({ s: "loading", q: query, rwaId: hit.rwaId, symbol: hit.symbol, name: hit.name });
-      const res = await fetch(`/api/rwa/passport?rwa_id=${hit.rwaId}`);
-      const body = await res.json();
-      if (!res.ok) return setStage({ s: "error", q: query, message: body?.error?.title ?? "CMC couldn't return this asset right now." });
-      setStage({ s: "done", q: query, passport: body });
-    } catch {
-      setStage({ s: "error", q: query, message: "Couldn't reach PULSE." });
-    }
-  };
-
-  // Enter on a decoded asset opens its Passport: the landing → app hand-off.
-  const open = () => stage.s === "done" && router.push(`/passport/${stage.passport.profile.rwaId}`);
-
-  useEffect(() => {
-    if (stage.s === "done") router.prefetch(`/passport/${stage.passport.profile.rwaId}`);
-  }, [stage, router]);
-
-  const p = stage.s === "done" ? stage.passport : null;
-  const ready = stage.s === "done" && q.trim() === stage.q;
-  const busy = stage.s === "resolving" || stage.s === "loading";
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : -70]);
+  const artY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 60]);
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 120]);
 
   return (
-    <section ref={section} className="relative isolate -mt-16 flex min-h-[100svh] flex-col overflow-hidden">
-      {/* Full-bleed landscape: the asset world behind the question */}
-      <motion.div style={{ y: imgY, scale: imgScale }} className="absolute inset-0 -z-10 origin-top">
+    <section ref={section} className="relative isolate -mt-20 overflow-hidden pt-20">
+      {/* Landscape, faded in on the right like a plate in a printed report */}
+      <motion.div style={{ y: bgY }} className="absolute inset-y-0 right-0 -z-10 w-full lg:w-[62%]" aria-hidden>
         <Image
           src="/pulse/hero/identity-landscape.webp"
           alt=""
           fill
           priority
-          sizes="100vw"
-          className="object-cover object-[70%_center] dark:brightness-[0.45] dark:saturate-75"
+          sizes="(min-width: 1024px) 62vw, 100vw"
+          className="object-cover object-[80%_center] opacity-35 [mask-image:linear-gradient(to_left,black_35%,transparent)] dark:opacity-20"
         />
       </motion.div>
-      {/* Legibility washes: cream from the left, fade into the page at the bottom */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-background/85 via-background/45 to-transparent sm:via-background/25" aria-hidden />
-      <div className="absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-t from-background to-transparent" aria-hidden />
 
-      <motion.div style={{ y: copyY }} className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-4 pt-28 pb-24 sm:px-6 lg:px-10">
-        <div className="flex max-w-xl min-w-0 flex-col">
-          <p className="eyebrow flex items-center gap-2 text-foreground/70">
-            <span className="relative grid size-2 place-items-center">
-              <span className={cn("absolute size-2 rounded-full", mode === "live" ? "ring-out bg-pulse/40" : "")} />
-              <span className={cn("size-1.5 rounded-full", mode === "live" ? "bg-pulse" : "bg-warn")} />
-            </span>
-            The verification layer for tokenized markets
-          </p>
-          <h1 className="display mt-5 text-[3.4rem] leading-[0.9] sm:text-[5.2rem] lg:text-[6.6rem]">
+      <div className="mx-auto grid min-h-[calc(100svh-5rem)] max-w-7xl grid-cols-1 items-center gap-10 px-4 pt-6 pb-16 sm:px-6 lg:grid-cols-[2.5rem_1fr_1.1fr] lg:gap-8 lg:px-10">
+        {/* Left rail */}
+        <div className="hidden h-full flex-col items-center justify-center gap-3 lg:flex" aria-hidden>
+          <span className="font-mono text-xs">01</span>
+          <span className="h-24 w-px bg-foreground/40" />
+          <span className="font-mono text-[10px] tracking-[0.3em] text-muted-foreground uppercase [writing-mode:vertical-rl]">Real assets</span>
+        </div>
+
+        <motion.div style={{ y: copyY }} className="flex min-w-0 flex-col">
+          <h1 className="display text-[3.6rem] leading-[0.88] sm:text-[5.6rem] lg:text-[6.3rem] xl:text-[7rem]">
             What exactly
             <br />
             are you <em className="text-pulse">buying?</em>
           </h1>
-          <p className="mt-6 max-w-md text-[15px] leading-relaxed text-foreground/75">
-            Find the asset behind the token. See who issued it, follow each representation across chains, and verify every number
-            against the CoinMarketCap response it came from.
+          <p className="mt-7 max-w-md text-[15.5px] leading-relaxed text-foreground/75">
+            One company can hide behind a dozen tokens, issuers and chains. PULSE resolves each one to its real-world asset — and
+            gives every number a receipt from CoinMarketCap.
           </p>
-
-          {/* Decoder */}
-          <div className="mt-8 max-w-xl">
-            <form
-              role="search"
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (ready) open();
-                else void decode(q);
-              }}
-              className="group relative flex h-14 items-center gap-3 rounded-2xl border bg-paper/85 pr-2 pl-4 backdrop-blur-md transition-[border-color,box-shadow] duration-300 focus-within:border-foreground/40 focus-within:shadow-[0_0_0_5px_color-mix(in_oklch,var(--pulse)_12%,transparent)]"
+          <div className="mt-9 flex flex-wrap items-center gap-3">
+            <Link
+              href="/passport"
+              className="inline-flex h-12 items-center gap-2 rounded-full bg-foreground px-6 text-sm font-medium text-background transition-transform duration-150 hover:-translate-y-px"
             >
-              <Search className="size-4 text-muted-foreground transition-colors group-focus-within:text-pulse" aria-hidden />
-              <input
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder="Search a tokenized asset…"
-                aria-label="Search a tokenized real-world asset"
-                className="min-w-0 flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground/70"
-                autoComplete="off"
-                spellCheck={false}
-              />
-              <button
-                type="submit"
-                disabled={busy}
-                className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-foreground px-4 text-sm font-medium text-background transition-transform duration-150 hover:-translate-y-px active:translate-y-0 disabled:opacity-60"
-              >
-                {busy ? <Loader2 className="size-4 animate-spin" /> : ready ? "Open passport" : "Identify"}
-                <ArrowRight className="size-4" />
-              </button>
-            </form>
-            <div className="mt-3 flex flex-wrap items-center gap-1.5">
-              {EXAMPLES.map((ex) => (
-                <button
-                  key={ex}
-                  type="button"
-                  onClick={() => void decode(ex)}
-                  className="rounded-full border border-foreground/15 bg-background/60 px-2.5 py-0.5 font-mono text-[11px] text-foreground/75 backdrop-blur-sm transition-colors hover:border-foreground/40 hover:text-foreground"
-                >
-                  {ex}
-                </button>
-              ))}
-            </div>
-
-            <AnimatePresence mode="wait">
-              {stage.s !== "idle" && (
-                <motion.div
-                  key={stage.s === "error" ? "err" : "run"}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="mt-5 rounded-2xl border bg-paper/92 p-4 backdrop-blur-md"
-                  style={{ boxShadow: "var(--shadow-paper)" }}
-                  aria-live="polite"
-                >
-                  {stage.s === "error" ? (
-                    <p className="text-sm">{stage.message}</p>
-                  ) : (
-                    <>
-                      <ol>
-                        <Step n="01" label="Resolve" done={stage.s !== "resolving"} active={stage.s === "resolving"}>
-                          {stage.s === "resolving" ? (
-                            <span className="text-muted-foreground">RWA ID Map…</span>
-                          ) : (
-                            <span className="font-mono text-[12.5px]">
-                              {stage.s === "loading" ? stage.symbol : p!.profile.symbol} → <span className="text-pulse">rwa_id {stage.s === "loading" ? stage.rwaId : p!.profile.rwaId}</span>
-                            </span>
-                          )}
-                        </Step>
-                        {stage.s !== "resolving" && (
-                          <Step n="02" label="Identify" done={!!p} active={stage.s === "loading"}>
-                            {p ? `${p.profile.name} · ${ASSET_TYPE_LABEL[p.profile.assetType]}` : <span className="text-muted-foreground">Metadata + quotes…</span>}
-                          </Step>
-                        )}
-                        {p && (
-                          <>
-                            <Step n="03" label="Issuers" done active={false}>
-                              {p.issuers.length ? p.issuers.map((i) => i.name).join(", ") : <span className="text-muted-foreground">Not in CMC data</span>}
-                            </Step>
-                            <Step n="04" label="Tokens" done active={false}>
-                              {p.tokens.length} tracked representation{p.tokens.length === 1 ? "" : "s"}
-                            </Step>
-                            <Step n="05" label="Chains" done active={false}>
-                              {p.chains.length ? p.chains.slice(0, 4).join(", ") + (p.chains.length > 4 ? ` +${p.chains.length - 4}` : "") : <span className="text-muted-foreground">Not in CMC data</span>}
-                            </Step>
-                            <Step n="06" label="Quote" done active={false}>
-                              <span className="flex items-center gap-3">
-                                <span className="font-semibold tabular">{formatMoney(p.aggregate?.averageTokenizedPrice, p.currency)}</span>
-                                {p.aggregate && <Verified status={p.aggregate.receipts.averageTokenizedPrice.verificationStatus} />}
-                              </span>
-                            </Step>
-                          </>
-                        )}
-                      </ol>
-                      {p && (
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-                          <Link
-                            href={`/passport/${p.profile.rwaId}`}
-                            className="mt-4 flex items-center justify-between rounded-xl bg-foreground px-4 py-3 text-sm text-background transition-transform duration-150 hover:-translate-y-px"
-                          >
-                            <span>
-                              Open the <span className="display text-lg">{p.profile.name}</span> passport
-                            </span>
-                            <ArrowRight className="size-4" />
-                          </Link>
-                        </motion.div>
-                      )}
-                    </>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
+              Explore assets <ArrowRight className="size-4" />
+            </Link>
+            <a href="#provenance" className="inline-flex h-12 items-center gap-2 rounded-full border border-foreground/20 bg-background/60 px-6 text-sm backdrop-blur-sm transition-colors hover:border-foreground/40">
+              See a receipt
+            </a>
           </div>
-        </div>
-      </motion.div>
+          <div className="mt-8 flex flex-wrap items-center gap-2">
+            <span className="font-mono text-[10px] tracking-[0.16em] text-muted-foreground uppercase">Try</span>
+            {TRY.map((t) => (
+              <Link
+                key={t}
+                href={`/passport?q=${t}`}
+                className="rounded-full border border-foreground/15 bg-background/60 px-3 py-1 font-mono text-[11px] backdrop-blur-sm transition-colors hover:border-foreground/40"
+              >
+                {t}
+              </Link>
+            ))}
+          </div>
+          <p className="mt-10 flex items-center gap-2 font-mono text-[10px] tracking-[0.16em] text-muted-foreground uppercase">
+            <span className={cn("size-1.5 rounded-full", mode === "live" ? "bg-pulse beat" : "bg-warn")} />
+            {mode === "live" ? "Live CoinMarketCap data" : "Demo data · set CMC_API_KEY for live"}
+          </p>
+        </motion.div>
 
-      {/* Editorial caption + scroll cue */}
-      <div className="relative mx-auto flex w-full max-w-7xl items-end justify-between px-4 pb-8 font-mono text-[10px] tracking-[0.16em] text-foreground/60 uppercase sm:px-6 lg:px-10">
-        <span className="hidden sm:inline">Fig. 01 — One underlying asset. Many representations.</span>
-        <span className="flex items-center gap-2">
-          Scroll <span className="h-px w-8 bg-foreground/40" /> 01 / Representations
-        </span>
+        <motion.div style={{ y: artY }} className="min-w-0">
+          {featured ? (
+            <Artifact p={featured} />
+          ) : (
+            <p className="text-sm text-muted-foreground">The live asset preview couldn’t load from CMC right now.</p>
+          )}
+        </motion.div>
       </div>
     </section>
   );

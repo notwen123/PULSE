@@ -1,6 +1,9 @@
+/** App tabs. Explore groups search, the full RWA list and issuers. */
 export const NAV = [
+  { href: "/passport", label: "Explore", match: ["/passport"] },
+  { href: "/assets", label: "All RWAs", match: ["/assets"] },
+  { href: "/issuers", label: "Issuers", match: ["/issuers"] },
   { href: "/pulse", label: "Daily Pulse", match: ["/pulse"] },
-  { href: "/passport", label: "Explore", match: ["/passport", "/assets", "/issuers"] },
   { href: "/saved", label: "Saved", match: ["/saved"] },
   { href: "/developers", label: "Developer", match: ["/developers"] },
 ] as const;

@@ -15,7 +15,7 @@ type Row = { rwaId: number; symbol: string; name: string; meta: string; recent?:
  * ⌘K / "/" command palette: the front door. Resolves through the RWA ID Map,
  * shows asset type and rwa_id, remembers recent Passports, full keyboard control.
  */
-export function CommandPalette() {
+export function CommandPalette({ compact = false }: { compact?: boolean }) {
   const router = useRouter();
   const recent = useRecent();
   const [open, setOpen] = useState(false);
@@ -77,11 +77,14 @@ export function CommandPalette() {
       <Dialog.Trigger asChild>
         <button
           aria-label="Find an asset (⌘K)"
-          className="group flex h-9 w-full items-center justify-center gap-2.5 rounded-full border bg-paper px-3 text-sm text-muted-foreground transition-colors hover:border-foreground/25 hover:text-foreground sm:justify-start sm:px-3.5"
+          className={cn(
+            "group flex h-9 w-full items-center justify-center gap-2.5 rounded-full text-sm text-muted-foreground transition-colors hover:text-foreground",
+            compact ? "" : "border bg-paper px-3 hover:border-foreground/25 sm:justify-start sm:px-3.5"
+          )}
         >
-          <Search className="size-3.5" />
-          <span className="hidden flex-1 text-left sm:inline">Find an asset</span>
-          <kbd className="hidden rounded border bg-background px-1.5 font-mono text-[10px] sm:inline">⌘K</kbd>
+          <Search className={compact ? "size-5 text-foreground" : "size-3.5"} />
+          {!compact && <span className="hidden flex-1 text-left sm:inline">Find an asset</span>}
+          {!compact && <kbd className="hidden rounded border bg-background px-1.5 font-mono text-[10px] sm:inline">⌘K</kbd>}
         </button>
       </Dialog.Trigger>
       <Dialog.Portal>

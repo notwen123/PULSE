@@ -90,7 +90,7 @@ export default async function Landing() {
 
   return (
     <div className="overflow-x-clip">
-      <Hero mode={mode} />
+      <Hero featured={featured} mode={mode} />
 
       <div className="mx-auto flex max-w-7xl flex-col gap-40 px-4 pt-16 sm:px-6 lg:px-10">
         {/* 01 — Representations */}
@@ -189,7 +189,7 @@ export default async function Landing() {
         </section>
 
         {/* 04 — Provenance */}
-        <section className="grid gap-14 lg:grid-cols-[1fr_1fr] lg:items-center">
+        <section id="provenance" className="scroll-mt-24 grid gap-14 lg:grid-cols-[1fr_1fr] lg:items-center">
           <div className="flex flex-col gap-8">
             <SectionHead n="04" label="Provenance" title={<>Every number<br />needs provenance.</>}>
               Tap any value in PULSE and it hands you its receipt: the endpoint, the exact field, when CMC updated it, when PULSE
