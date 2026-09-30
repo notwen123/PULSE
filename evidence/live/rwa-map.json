@@ -2,8 +2,8 @@
   "_note": "LIVE CMC RESPONSE captured by scripts/capture-evidence.mjs. API key omitted.",
   "request": "GET /v5/real-world-assets/map?symbol=TSLA%2CNVDA%2CGOLD%2CSPCX",
   "httpStatus": 200,
-  "capturedAt": "2026-09-29T15:23:55.610Z",
-  "sha256": "251bd66bc9f75679ff4596b1620af48a3541c432e9f869e1920774adcfe299f9",
+  "capturedAt": "2026-09-30T19:14:34.298Z",
+  "sha256": "f5da96c9a28949eb8bd5ce0d472a80550aaae6bd7209c54caad739de5f8458bc",
   "response": {
     "data": {
       "rwa_assets": [
@@ -16,7 +16,7 @@
           "rwa_rank": 1,
           "has_tokens": true,
           "first_historical_data": "2009-09-27T00:00:00.000Z",
-          "last_historical_data": "2026-09-29T15:22:00.000Z"
+          "last_historical_data": "2026-09-30T19:12:00.000Z"
         },
         {
           "name": "Nvidia Corp",
@@ -27,7 +27,7 @@
           "rwa_rank": 2,
           "has_tokens": true,
           "first_historical_data": "2003-09-07T04:00:00.000Z",
-          "last_historical_data": "2026-09-29T15:22:00.000Z"
+          "last_historical_data": "2026-09-30T19:12:00.000Z"
         },
         {
           "name": "SpaceX",
@@ -38,7 +38,7 @@
           "rwa_rank": 9,
           "has_tokens": true,
           "first_historical_data": "2020-12-13T05:00:00.000Z",
-          "last_historical_data": "2026-09-29T15:22:00.000Z"
+          "last_historical_data": "2026-09-30T19:05:00.000Z"
         },
         {
           "name": "Tesla, Inc.",
@@ -49,14 +49,14 @@
           "rwa_rank": 12,
           "has_tokens": true,
           "first_historical_data": "2010-06-27T04:00:00.000Z",
-          "last_historical_data": "2026-09-29T15:22:00.000Z"
+          "last_historical_data": "2026-09-30T19:12:00.000Z"
         }
       ],
       "total_size": 4,
       "has_more": false
     },
     "status": {
-      "timestamp": "2026-09-29T15:23:55.467Z",
+      "timestamp": "2026-09-30T19:14:34.094Z",
       "error_code": "0",
       "error_message": "",
       "elapsed": 1,

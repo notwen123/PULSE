@@ -1,0 +1,195 @@
+{
+  "_note": "LIVE CMC RESPONSE captured by scripts/capture-evidence.mjs. API key omitted.",
+  "request": "GET /v2/cryptocurrency/info?id=37004%2C28626&aux=platform%2Clogo",
+  "httpStatus": 200,
+  "capturedAt": "2026-09-30T19:14:38.271Z",
+  "sha256": "fa77a0ddfff5be50a3fca8ef7502028c7be615a71a20e8c11db943300398a0ae",
+  "response": {
+    "data": {
+      "28626": {
+        "id": 28626,
+        "name": "TSLA tokenized stock (Dinari)",
+        "symbol": "TSLA.D",
+        "category": "token",
+        "slug": "dinari-tsla",
+        "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/28626.png",
+        "subreddit": "dinari",
+        "tag-names": [
+          "DeFi",
+          "Tokenized Stock",
+          "Tokenized Assets"
+        ],
+        "tag-groups": [
+          "CATEGORY",
+          "CATEGORY",
+          "CATEGORY"
+        ],
+        "platform": {
+          "id": "11841",
+          "name": "Arbitrum",
+          "symbol": "ARB",
+          "slug": "arbitrum",
+          "token_address": "0x36d37B6cbCA364Cf1D843efF8C2f6824491bcF81"
+        },
+        "twitter_username": "DinariGlobal",
+        "is_hidden": 0,
+        "date_launched": "2021-10-31T00:00:00.000Z",
+        "contract_address": [
+          {
+            "contract_address": "0x36d37B6cbCA364Cf1D843efF8C2f6824491bcF81",
+            "platform": {
+              "name": "Arbitrum",
+              "coin": {
+                "id": "11841",
+                "name": "Arbitrum",
+                "symbol": "ARB",
+                "slug": "arbitrum"
+              }
+            }
+          }
+        ],
+        "self_reported_circulating_supply": 1,
+        "infinite_supply": false
+      },
+      "37004": {
+        "id": 37004,
+        "name": "Tesla tokenized stock (xStock)",
+        "symbol": "TSLAX",
+        "category": "token",
+        "slug": "tesla-tokenized-stock-xstock",
+        "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/37004.png",
+        "subreddit": "",
+        "tag-names": [
+          "DeFi",
+          "Ethereum Ecosystem",
+          "Tokenized Stock",
+          "Solana Ecosystem",
+          "Arbitrum Ecosystem",
+          "BNB Chain Ecosystem",
+          "Toncoin Ecosystem",
+          "X Layer Ecosystem",
+          "Internet Capital Markets",
+          "Tokenized Assets",
+          "xStocks Ecosystem"
+        ],
+        "tag-groups": [
+          "CATEGORY",
+          "PLATFORM",
+          "CATEGORY",
+          "PLATFORM",
+          "PLATFORM",
+          "PLATFORM",
+          "PLATFORM",
+          "PLATFORM",
+          "CATEGORY",
+          "CATEGORY",
+          "CATEGORY"
+        ],
+        "platform": {
+          "id": "5426",
+          "name": "Solana",
+          "symbol": "SOL",
+          "slug": "solana",
+          "token_address": "XsDoVfqeBukxuZHWhdvWHBhgEHjGNst4MLodqsJHzoB"
+        },
+        "twitter_username": "xStocksFi",
+        "is_hidden": 0,
+        "contract_address": [
+          {
+            "contract_address": "XsDoVfqeBukxuZHWhdvWHBhgEHjGNst4MLodqsJHzoB",
+            "platform": {
+              "name": "Solana",
+              "coin": {
+                "id": "5426",
+                "name": "Solana",
+                "symbol": "SOL",
+                "slug": "solana"
+              }
+            }
+          },
+          {
+            "contract_address": "0x8ad3c73f833d3f9a523ab01476625f269aeb7cf0",
+            "platform": {
+              "name": "Arbitrum",
+              "coin": {
+                "id": "11841",
+                "name": "Arbitrum",
+                "symbol": "ARB",
+                "slug": "arbitrum"
+              }
+            }
+          },
+          {
+            "contract_address": "0x8ad3c73f833d3f9a523ab01476625f269aeb7cf0",
+            "platform": {
+              "name": "BNB Smart Chain (BEP20)",
+              "coin": {
+                "id": "1839",
+                "name": "BNB",
+                "symbol": "BNB",
+                "slug": "bnb"
+              }
+            }
+          },
+          {
+            "contract_address": "0x8ad3c73f833d3f9a523ab01476625f269aeb7cf0",
+            "platform": {
+              "name": "Ethereum",
+              "coin": {
+                "id": "1027",
+                "name": "Ethereum",
+                "symbol": "ETH",
+                "slug": "ethereum"
+              }
+            }
+          },
+          {
+            "contract_address": "0x8ad3c73f833d3f9a523ab01476625f269aeb7cf0",
+            "platform": {
+              "name": "Ink",
+              "coin": {
+                "id": "36851",
+                "name": "INK",
+                "symbol": "INK",
+                "slug": "ink-token"
+              }
+            }
+          },
+          {
+            "contract_address": "EQB4IwqWZPUczntdry8vSN2tsJKt-9F7iIb7gEFREYYOB563",
+            "platform": {
+              "name": "TON",
+              "coin": {
+                "id": "11419",
+                "name": "Gram (prev. Toncoin)",
+                "symbol": "GRAM",
+                "slug": "gram"
+              }
+            }
+          },
+          {
+            "contract_address": "0x8aD3c73F833d3F9A523aB01476625F269aEB7Cf0",
+            "platform": {
+              "name": "X Layer",
+              "coin": {
+                "id": "3897",
+                "name": "OKB",
+                "symbol": "OKB",
+                "slug": "okb"
+              }
+            }
+          }
+        ],
+        "infinite_supply": true
+      }
+    },
+    "status": {
+      "timestamp": "2026-09-30T19:14:38.099Z",
+      "error_code": 0,
+      "error_message": null,
+      "elapsed": 11,
+      "credit_count": 1,
+      "notice": null
+    }
+  }
+}

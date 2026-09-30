@@ -15,7 +15,7 @@ export default async function IssuersPage() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow">Explore</p>
-          <h1 className="mt-2 display text-5xl sm:text-6xl">Token issuers</h1>
+          <h1 className="mt-2 display text-4xl sm:text-5xl">Token issuers</h1>
           <p className="mt-3 max-w-xl text-muted-foreground">The organisations CMC tracks as minting tokenized RWAs, from /v5/real-world-assets/issuers/list.</p>
         </div>
         {!(result instanceof Error) && <DataModeBadge mode={result.mode} />}

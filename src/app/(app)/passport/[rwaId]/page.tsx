@@ -57,13 +57,11 @@ function Section({ n, eyebrow, title, children, aside }: { n: string; eyebrow: s
   return (
     <section className="flex flex-col gap-7">
       <div className="flex items-center gap-4">
-        <span className="font-mono text-[11px] tracking-[0.16em] text-muted-foreground">
-          {n} / {eyebrow.toUpperCase()}
-        </span>
+        <span className="text-sm font-medium text-pulse">{n} · {eyebrow}</span>
         <span className="rule flex-1" />
         {aside}
       </div>
-      <h2 className="display -mt-2 text-4xl sm:text-5xl">{title}</h2>
+      <h2 className="display -mt-2 text-2xl sm:text-3xl">{title}</h2>
       {children}
     </section>
   );
@@ -97,7 +95,7 @@ export default async function PassportPage({ params }: Props) {
 
       {/* Passport header: identity left, the number that matters right */}
       <header className="flex flex-col gap-8">
-        <div className="flex flex-wrap items-center gap-2 font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
+        <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
           <Link href="/passport" className="hover:text-foreground">Passport</Link>
           <ChevronRight className="size-3" />
           <span className="text-foreground">{profile.symbol}</span>
@@ -112,14 +110,14 @@ export default async function PassportPage({ params }: Props) {
             )}
             <div className="min-w-0">
               <p className="eyebrow">Real-world asset · {ASSET_TYPE_LABEL[profile.assetType]}</p>
-              <h1 className="display mt-3 text-5xl leading-[0.92] break-words sm:text-7xl lg:text-8xl">{profile.name}</h1>
+              <h1 className="display mt-2 text-4xl leading-[1.05] break-words sm:text-5xl">{profile.name}</h1>
               <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
-                <span className="font-mono text-lg">{profile.symbol}</span>
+                <span className="text-lg font-medium">{profile.symbol}</span>
                 <TruthReceipt receipt={p.identityReceipt} display={String(profile.rwaId)} hideCue>
                   <span className="rounded-full border border-pulse/40 bg-pulse-soft px-3 py-0.5 font-mono text-xs font-medium text-pulse">RWA #{profile.rwaId}</span>
                 </TruthReceipt>
-                {profile.rank != null && <span className="font-mono text-xs text-muted-foreground">Rank #{profile.rank}</span>}
-                <span className="font-mono text-xs text-muted-foreground">
+                {profile.rank != null && <span className="text-sm text-muted-foreground">Rank #{profile.rank}</span>}
+                <span className="text-sm text-muted-foreground">
                   {profile.hasTokens == null ? "Tokenization not reported" : profile.hasTokens ? `${p.tokens.length} tracked tokens` : "No tracked tokens"}
                 </span>
               </div>
@@ -179,7 +177,7 @@ export default async function PassportPage({ params }: Props) {
       </header>
 
       <Section n="01" eyebrow="Identity" title="What exactly is this tokenized asset?">
-        <div className="surface registered px-4 py-12 sm:px-10">
+        <div className="surface px-4 py-12 sm:px-10">
           <IdentityGraph passport={p} />
         </div>
       </Section>

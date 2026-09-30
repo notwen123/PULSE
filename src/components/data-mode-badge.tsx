@@ -7,7 +7,7 @@ export function DataModeBadge({ mode, className }: { mode: DataMode; className?:
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[10px] font-medium tracking-[0.12em] uppercase",
+        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium",
         live ? "border-pulse/30 bg-pulse-soft text-pulse" : "border-warn/40 bg-warn-soft text-warn",
         className
       )}

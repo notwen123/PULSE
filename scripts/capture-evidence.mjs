@@ -17,6 +17,7 @@ const CALLS = [
   ["rwa-assets-list", "/v5/real-world-assets/assets/list", { limit: "5" }],
   ["rwa-issuers-list", "/v5/real-world-assets/issuers/list", { limit: "10" }],
   ["rwa-issuer", "/v5/real-world-assets/issuers", { issuer_id: "6a2d54b697c45356b1a634f4" }],
+  ["crypto-info", "/v2/cryptocurrency/info", { id: "37004,28626", aux: "platform,logo" }],
   ["global-metrics", "/v1/global-metrics/quotes/latest", {}],
   ["fear-and-greed", "/v3/fear-and-greed/latest", {}],
   ["altcoin-season", "/v1/altcoin-season-index/latest", {}],

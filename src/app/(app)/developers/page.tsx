@@ -38,7 +38,7 @@ export default function DevelopersPage() {
     <div className="mx-auto flex max-w-5xl flex-col gap-14 px-4 py-12 sm:px-6">
       <header>
         <p className="eyebrow">Developer</p>
-        <h1 className="mt-2 display text-5xl sm:text-6xl">Evidence API</h1>
+        <h1 className="mt-2 display text-4xl sm:text-5xl">Evidence API</h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
           The receipts behind every PULSE number, as JSON. Agents and scripts can ask a narrow, structured question and get the
           value together with its source endpoint, timestamps, identifier, credit count and response hash. The API key stays on the server.

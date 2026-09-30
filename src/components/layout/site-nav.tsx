@@ -32,7 +32,7 @@ export function AppTabs() {
   const path = usePathname();
   return (
     <nav aria-label="App" className="-mb-px flex gap-7 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-      {NAV.map((n, i) => {
+      {NAV.map((n) => {
         const on = isActive(path, n.match);
         return (
           <Link
@@ -40,11 +40,10 @@ export function AppTabs() {
             href={n.href}
             aria-current={on ? "page" : undefined}
             className={cn(
-              "group flex shrink-0 items-baseline gap-2 border-b-2 py-3 text-sm transition-colors",
+              "shrink-0 border-b-2 py-3 text-sm font-medium transition-colors",
               on ? "border-foreground text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"
             )}
           >
-            <span className={cn("font-mono text-[9.5px]", on ? "text-pulse" : "text-muted-foreground/70")}>0{i + 1}</span>
             {n.label}
           </Link>
         );

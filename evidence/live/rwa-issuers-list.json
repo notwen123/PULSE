@@ -2,8 +2,8 @@
   "_note": "LIVE CMC RESPONSE captured by scripts/capture-evidence.mjs. API key omitted.",
   "request": "GET /v5/real-world-assets/issuers/list?limit=10",
   "httpStatus": 200,
-  "capturedAt": "2026-09-29T15:23:58.286Z",
-  "sha256": "42e0bc991b0e11856285de50012f63b2e2c9cb98dece2e585c083dab561a6ad1",
+  "capturedAt": "2026-09-30T19:14:37.256Z",
+  "sha256": "6379ca6ba5d89ef7c542962238d17cc62214d7779d40817bc5821b4918bb2a5d",
   "response": {
     "data": {
       "issuers": [
@@ -82,10 +82,10 @@
       "has_more": true
     },
     "status": {
-      "timestamp": "2026-09-29T15:23:58.158Z",
+      "timestamp": "2026-09-30T19:14:37.070Z",
       "error_code": "0",
       "error_message": "",
-      "elapsed": 2,
+      "elapsed": 3,
       "credit_count": 1
     }
   }

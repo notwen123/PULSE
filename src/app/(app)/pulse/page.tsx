@@ -62,7 +62,7 @@ async function PulseMarket({ currency }: { currency: string }) {
             <>
               <TruthReceipt receipt={pulse.fearGreed.receipt} display={String(pulse.fearGreed.value)} className="mt-5">
                 <span className="flex items-end gap-4">
-                  <span className="font-sans text-8xl font-semibold tracking-tighter tabular">{pulse.fearGreed.value}</span>
+                  <span className="text-7xl font-semibold tracking-tight tabular">{pulse.fearGreed.value}</span>
                   {pulse.fearGreed.classification && <span className="display mb-3 text-4xl">{pulse.fearGreed.classification}</span>}
                 </span>
               </TruthReceipt>
@@ -78,7 +78,7 @@ async function PulseMarket({ currency }: { currency: string }) {
             <>
               <TruthReceipt receipt={pulse.altcoinSeason.receipt} display={String(pulse.altcoinSeason.value)} className="mt-5">
                 <span className="flex items-end gap-4">
-                  <span className="font-sans text-8xl font-semibold tracking-tighter tabular">{pulse.altcoinSeason.value}</span>
+                  <span className="text-7xl font-semibold tracking-tight tabular">{pulse.altcoinSeason.value}</span>
                   <span className="display mb-3 text-4xl">{season(pulse.altcoinSeason.value)}</span>
                 </span>
               </TruthReceipt>
@@ -92,7 +92,7 @@ async function PulseMarket({ currency }: { currency: string }) {
 
       <section className="flex flex-col gap-6">
         <div className="flex items-center gap-4">
-          <span className="font-mono text-[11px] tracking-[0.16em] text-muted-foreground">03 / GLOBAL MARKET</span>
+          <span className="text-sm font-medium text-pulse">03 · Global Market</span>
           <span className="rule flex-1" />
         </div>
         {g ? (
@@ -141,7 +141,7 @@ export default async function PulsePage() {
     <div className="mx-auto flex max-w-7xl flex-col gap-16 px-4 py-10 sm:px-6 sm:py-14 lg:px-10">
       <header className="flex flex-col gap-5 border-b pb-10">
         <p className="eyebrow">Today’s pulse · {today}</p>
-        <h1 className="display text-6xl leading-[0.92] sm:text-8xl">
+        <h1 className="display text-4xl leading-[1.05] sm:text-6xl">
           <Greeting />.
         </h1>
         <p className="max-w-lg text-[15px] text-muted-foreground">Sentiment, regime, the wider market — then the real-world assets you follow. About a minute.</p>
@@ -154,7 +154,7 @@ export default async function PulsePage() {
 
       <section className="flex flex-col gap-6">
         <div className="flex items-center gap-4">
-          <span className="font-mono text-[11px] tracking-[0.16em] text-muted-foreground">04 / YOUR RWAS</span>
+          <span className="text-sm font-medium text-pulse">04 · Your Rwas</span>
           <span className="rule flex-1" />
         </div>
         <SavedSnapshots currency={currency} />

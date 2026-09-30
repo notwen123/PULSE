@@ -12,7 +12,7 @@ export default async function SavedPage() {
     <div className="mx-auto flex max-w-3xl flex-col gap-8 px-4 py-12 sm:px-6">
       <div>
         <p className="eyebrow">Saved</p>
-        <h1 className="mt-2 display text-5xl sm:text-6xl">My RWAs</h1>
+        <h1 className="mt-2 display text-4xl sm:text-5xl">My RWAs</h1>
         <p className="mt-3 text-muted-foreground">Stored in this browser. No account needed.</p>
       </div>
       <SavedSnapshots

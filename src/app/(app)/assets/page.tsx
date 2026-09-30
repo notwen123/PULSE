@@ -25,7 +25,7 @@ export default async function AssetsPage({ searchParams }: Props) {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow">Explore</p>
-          <h1 className="mt-2 display text-5xl sm:text-6xl">All tracked RWAs</h1>
+          <h1 className="mt-2 display text-4xl sm:text-5xl">All tracked RWAs</h1>
           <p className="mt-3 max-w-xl text-muted-foreground">Ranked by CMC rwa_rank, with tokenized aggregate quotes from /v5/real-world-assets/assets/list.</p>
         </div>
         {!(result instanceof Error) && <DataModeBadge mode={result.mode} />}

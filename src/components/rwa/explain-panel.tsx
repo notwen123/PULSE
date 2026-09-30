@@ -16,7 +16,7 @@ export function ExplainPanel({ lines }: { lines: string[] }) {
         aria-expanded={open}
         className="flex w-full items-center gap-4 py-6 text-left"
       >
-        <span className="display text-3xl sm:text-4xl">Explain this asset</span>
+        <span className="display text-2xl sm:text-3xl">Explain this asset</span>
         <span className="hidden font-mono text-[10px] tracking-wider text-muted-foreground uppercase sm:inline">Plain English · CMC fields only · no advice</span>
         <Plus className={cn("ml-auto size-5 transition-transform duration-300", open && "rotate-45")} />
       </button>

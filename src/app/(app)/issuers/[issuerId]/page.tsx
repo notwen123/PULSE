@@ -31,7 +31,7 @@ export default async function IssuerPage({ params }: Props) {
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="eyebrow">Issuer</p>
-              <h1 className="mt-2 display text-5xl sm:text-6xl">{result.data.name}</h1>
+              <h1 className="mt-2 display text-4xl sm:text-5xl">{result.data.name}</h1>
               <p className="mt-2 text-muted-foreground">{result.data.tokens?.length ?? 0} linked token(s) returned by /v5/real-world-assets/issuers</p>
             </div>
             <DataModeBadge mode={result.mode} />

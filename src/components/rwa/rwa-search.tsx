@@ -109,7 +109,7 @@ export function RwaSearch({ variant = "hero", autoFocus = false }: { variant?: "
                 setActive((a) => Math.max(a - 1, 0));
               } else if (e.key === "Escape") setOpen(false);
             }}
-            placeholder={hero ? "Search a tokenized asset — TSLA, GOLD, Apple…" : "Search RWAs"}
+            placeholder={hero ? "Search TSLA, Gold, Apple…" : "Search RWAs"}
             className={cn("min-w-0 flex-1 bg-transparent outline-none placeholder:text-muted-foreground/70", hero ? "text-base sm:text-lg" : "text-sm")}
             aria-label="Search tokenized real-world assets"
             role="combobox"

@@ -36,7 +36,7 @@ export default async function ExplorePage({ searchParams }: Props) {
     <div className="mx-auto flex max-w-7xl flex-col gap-16 px-4 py-14 sm:px-6 sm:py-20 lg:px-10">
       <header className="flex flex-col gap-8">
         <p className="eyebrow">Explore · RWA Passport</p>
-        <h1 className="display max-w-4xl text-6xl leading-[0.92] sm:text-8xl">Search the world’s tokenized assets.</h1>
+        <h1 className="display max-w-4xl text-4xl leading-[1.05] sm:text-6xl">Search the world’s tokenized assets.</h1>
         {q && !hit && <p className="text-sm text-muted-foreground">No RWA matches “{q}”. Try another ticker or name.</p>}
         <RwaSearch autoFocus />
         <RecentAssets />

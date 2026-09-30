@@ -6,15 +6,15 @@
 
 /* ------------------------------------------------------------------------
  * PULSE design tokens
- * Cream canvas · near-black ink · forest green reserved for verification.
- * Roughly 75% neutral, 20% ink, 5% green.
+ * Near-white canvas · ink text · one green accent, reserved for "verified".
+ * One typeface (Inter); mono only for identifiers, endpoints and hashes.
  * --------------------------------------------------------------------- */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-face), ui-monospace, monospace;
 
   --color-ring: var(--ring);
   --color-input: var(--input);
@@ -55,71 +55,71 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(0.967 0.014 88);      /* cream */
-  --paper: oklch(0.985 0.009 88);           /* raised paper */
-  --foreground: oklch(0.2 0.012 150);       /* ink, slightly green-black */
-  --ink: oklch(0.2 0.012 150);
-  --card: oklch(0.985 0.009 88);
-  --card-foreground: oklch(0.2 0.012 150);
-  --popover: oklch(0.99 0.007 88);
-  --popover-foreground: oklch(0.2 0.012 150);
-  --primary: oklch(0.2 0.012 150);
-  --primary-foreground: oklch(0.975 0.012 88);
-  --secondary: oklch(0.935 0.015 88);
-  --secondary-foreground: oklch(0.25 0.012 150);
-  --muted: oklch(0.935 0.015 88);
-  --muted-foreground: oklch(0.47 0.015 120);
-  --accent: oklch(0.935 0.015 88);
-  --accent-foreground: oklch(0.2 0.012 150);
-  --destructive: oklch(0.52 0.17 30);
-  --border: oklch(0.87 0.018 88);
-  --input: oklch(0.86 0.018 88);
-  --ring: oklch(0.42 0.09 155);
-  --pulse: oklch(0.42 0.09 155);            /* deep forest */
-  --pulse-soft: oklch(0.92 0.035 150);
-  --pulse-foreground: oklch(0.975 0.012 88);
-  --sage: oklch(0.7 0.045 150);
-  --warn: oklch(0.55 0.11 70);
-  --warn-soft: oklch(0.93 0.045 85);
-  --up: oklch(0.45 0.1 155);
-  --down: oklch(0.52 0.15 30);
+  --radius: 0.75rem;
+  --background: oklch(0.985 0.002 100);    /* near-white */
+  --paper: oklch(1 0 0);
+  --foreground: oklch(0.19 0.01 150);
+  --ink: oklch(0.19 0.01 150);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.19 0.01 150);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.19 0.01 150);
+  --primary: oklch(0.19 0.01 150);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.004 100);
+  --secondary-foreground: oklch(0.25 0.01 150);
+  --muted: oklch(0.96 0.004 100);
+  --muted-foreground: oklch(0.5 0.01 150);
+  --accent: oklch(0.96 0.004 100);
+  --accent-foreground: oklch(0.19 0.01 150);
+  --destructive: oklch(0.55 0.18 28);
+  --border: oklch(0.91 0.005 100);
+  --input: oklch(0.9 0.005 100);
+  --ring: oklch(0.48 0.11 155);
+  --pulse: oklch(0.48 0.11 155);            /* the one accent: verified green */
+  --pulse-soft: oklch(0.95 0.035 155);
+  --pulse-foreground: oklch(0.99 0 0);
+  --sage: oklch(0.7 0.05 155);
+  --warn: oklch(0.58 0.12 70);
+  --warn-soft: oklch(0.95 0.045 85);
+  --up: oklch(0.5 0.12 155);
+  --down: oklch(0.55 0.17 28);
 
-  --shadow-paper: 0 1px 0 oklch(0.2 0.012 150 / 0.04), 0 8px 24px -12px oklch(0.2 0.012 150 / 0.12);
-  --shadow-lift: 0 1px 0 oklch(0.2 0.012 150 / 0.05), 0 24px 60px -24px oklch(0.2 0.012 150 / 0.28);
+  --shadow-paper: 0 1px 2px oklch(0.19 0.01 150 / 0.05);
+  --shadow-lift: 0 12px 32px -12px oklch(0.19 0.01 150 / 0.22);
 }
 
 .dark {
-  --background: oklch(0.17 0.01 150);
-  --paper: oklch(0.205 0.011 150);
-  --foreground: oklch(0.94 0.014 88);
-  --ink: oklch(0.94 0.014 88);
-  --card: oklch(0.205 0.011 150);
-  --card-foreground: oklch(0.94 0.014 88);
-  --popover: oklch(0.22 0.011 150);
-  --popover-foreground: oklch(0.94 0.014 88);
-  --primary: oklch(0.94 0.014 88);
-  --primary-foreground: oklch(0.18 0.01 150);
-  --secondary: oklch(0.25 0.011 150);
-  --secondary-foreground: oklch(0.94 0.014 88);
-  --muted: oklch(0.25 0.011 150);
-  --muted-foreground: oklch(0.7 0.015 110);
-  --accent: oklch(0.26 0.011 150);
-  --accent-foreground: oklch(0.94 0.014 88);
-  --destructive: oklch(0.66 0.15 30);
-  --border: oklch(0.31 0.012 150);
-  --input: oklch(0.32 0.012 150);
-  --ring: oklch(0.74 0.1 155);
-  --pulse: oklch(0.76 0.1 155);
-  --pulse-soft: oklch(0.29 0.04 155);
-  --pulse-foreground: oklch(0.18 0.02 155);
-  --sage: oklch(0.55 0.04 150);
-  --warn: oklch(0.8 0.1 80);
-  --warn-soft: oklch(0.3 0.04 80);
-  --up: oklch(0.76 0.12 155);
-  --down: oklch(0.72 0.14 30);
-  --shadow-paper: 0 1px 0 oklch(0 0 0 / 0.3), 0 8px 24px -12px oklch(0 0 0 / 0.5);
-  --shadow-lift: 0 1px 0 oklch(0 0 0 / 0.3), 0 24px 60px -24px oklch(0 0 0 / 0.7);
+  --background: oklch(0.16 0.006 150);
+  --paper: oklch(0.2 0.007 150);
+  --foreground: oklch(0.96 0.003 100);
+  --ink: oklch(0.96 0.003 100);
+  --card: oklch(0.2 0.007 150);
+  --card-foreground: oklch(0.96 0.003 100);
+  --popover: oklch(0.21 0.007 150);
+  --popover-foreground: oklch(0.96 0.003 100);
+  --primary: oklch(0.96 0.003 100);
+  --primary-foreground: oklch(0.17 0.006 150);
+  --secondary: oklch(0.25 0.007 150);
+  --secondary-foreground: oklch(0.96 0.003 100);
+  --muted: oklch(0.25 0.007 150);
+  --muted-foreground: oklch(0.7 0.01 150);
+  --accent: oklch(0.26 0.007 150);
+  --accent-foreground: oklch(0.96 0.003 100);
+  --destructive: oklch(0.66 0.16 28);
+  --border: oklch(0.29 0.008 150);
+  --input: oklch(0.3 0.008 150);
+  --ring: oklch(0.74 0.12 155);
+  --pulse: oklch(0.74 0.13 155);
+  --pulse-soft: oklch(0.28 0.045 155);
+  --pulse-foreground: oklch(0.17 0.02 155);
+  --sage: oklch(0.55 0.05 155);
+  --warn: oklch(0.8 0.11 80);
+  --warn-soft: oklch(0.3 0.045 80);
+  --up: oklch(0.76 0.13 155);
+  --down: oklch(0.72 0.15 28);
+  --shadow-paper: 0 1px 2px oklch(0 0 0 / 0.3);
+  --shadow-lift: 0 12px 32px -12px oklch(0 0 0 / 0.6);
 }
 
 @layer base {
@@ -132,23 +132,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "ss01", "cv11";
-  }
-  /* Paper grain: one tiny SVG noise tile, fixed, 4% opacity. */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 60;
-    pointer-events: none;
-    opacity: 0.045;
-    background-image: url("/pulse/textures/grain.svg");
-    background-size: 180px;
-    mix-blend-mode: multiply;
-  }
-  .dark body::before {
-    mix-blend-mode: screen;
-    opacity: 0.03;
+    font-feature-settings: "cv11", "ss03";
   }
   ::selection {
     background: color-mix(in oklch, var(--pulse) 22%, transparent);
@@ -163,12 +147,13 @@
   .tabular {
     font-variant-numeric: tabular-nums;
   }
-  /* Micro label: section numbers, field names, metadata. */
+  /* Small section label. */
   .eyebrow {
-    @apply font-mono text-[10.5px] font-medium tracking-[0.16em] uppercase text-muted-foreground;
+    @apply text-xs font-medium tracking-wide text-muted-foreground uppercase;
   }
+  /* Headings: one typeface, weight and tight tracking do the work. */
   .display {
-    @apply font-serif font-normal tracking-[-0.02em];
+    @apply font-sans font-semibold tracking-[-0.035em];
   }
   .surface {
     @apply rounded-2xl border bg-paper;
@@ -176,23 +161,6 @@
   }
   .rule {
     @apply h-px w-full bg-border;
-  }
-  /* Tiny registration marks on evidence documents. */
-  .registered {
-    background-image:
-      linear-gradient(var(--foreground), var(--foreground)), linear-gradient(var(--foreground), var(--foreground)),
-      linear-gradient(var(--foreground), var(--foreground)), linear-gradient(var(--foreground), var(--foreground)),
-      linear-gradient(var(--foreground), var(--foreground)), linear-gradient(var(--foreground), var(--foreground)),
-      linear-gradient(var(--foreground), var(--foreground)), linear-gradient(var(--foreground), var(--foreground));
-    background-size: 10px 1px, 1px 10px, 10px 1px, 1px 10px, 10px 1px, 1px 10px, 10px 1px, 1px 10px;
-    background-position: 10px 14px, 14px 10px, calc(100% - 10px) 14px, calc(100% - 14px) 10px, 10px calc(100% - 14px),
-      14px calc(100% - 10px), calc(100% - 10px) calc(100% - 14px), calc(100% - 14px) calc(100% - 10px);
-    background-repeat: no-repeat;
-  }
-  .perforated {
-    background-image: radial-gradient(circle at 5px 0, transparent 4px, var(--paper) 4.5px);
-    background-size: 12px 6px;
-    background-repeat: repeat-x;
   }
 }
 

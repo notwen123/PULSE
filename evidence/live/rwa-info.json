@@ -2,8 +2,8 @@
   "_note": "LIVE CMC RESPONSE captured by scripts/capture-evidence.mjs. API key omitted.",
   "request": "GET /v5/real-world-assets/info?symbol=SPCX",
   "httpStatus": 200,
-  "capturedAt": "2026-09-29T15:23:55.978Z",
-  "sha256": "6ee1f4e05ef1a76ad7bddf0f15365eeff86268a08531aac453f5329fc8cae12f",
+  "capturedAt": "2026-09-30T19:14:34.965Z",
+  "sha256": "ff2b36cd16cdc1cae91e0183335d419c3bca4c9cfb9414b9cce4855527a62061",
   "response": {
     "data": {
       "rwa_assets": [
@@ -31,10 +31,10 @@
       ]
     },
     "status": {
-      "timestamp": "2026-09-29T15:23:55.758Z",
+      "timestamp": "2026-09-30T19:14:34.854Z",
       "error_code": "0",
       "error_message": "",
-      "elapsed": 4,
+      "elapsed": 3,
       "credit_count": 1
     }
   }

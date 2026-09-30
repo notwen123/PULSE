@@ -2,8 +2,8 @@
   "_note": "LIVE CMC RESPONSE captured by scripts/capture-evidence.mjs. API key omitted.",
   "request": "GET /v5/real-world-assets/issuers?issuer_id=6a2d54b697c45356b1a634f4",
   "httpStatus": 200,
-  "capturedAt": "2026-09-29T15:23:59.050Z",
-  "sha256": "3cc49b58936c81f4b8c7bd7945a51497400c306d57cd7f3b2b00fe71edc41f49",
+  "capturedAt": "2026-09-30T19:14:37.939Z",
+  "sha256": "d28bb8d7483f5af155ff910ce02335bd751160adf219deefe5bca3f36bae4e6f",
   "response": {
     "data": {
       "name": "Backpack",
@@ -77,10 +77,10 @@
       "has_more": false
     },
     "status": {
-      "timestamp": "2026-09-29T15:23:58.914Z",
+      "timestamp": "2026-09-30T19:14:37.821Z",
       "error_code": "0",
       "error_message": "",
-      "elapsed": 3,
+      "elapsed": 4,
       "credit_count": 1
     }
   }

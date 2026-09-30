@@ -28,7 +28,7 @@ function CopyButton({ text, label }: { text: string; label: string }) {
           () => undefined
         )
       }
-      className="inline-flex items-center gap-1 rounded px-1.5 py-0.5 font-mono text-[10px] tracking-wider text-muted-foreground uppercase transition-colors hover:bg-muted hover:text-foreground"
+      className="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
       aria-label={label}
     >
       {done ? <Check className="size-3" /> : <Copy className="size-3" />}
@@ -37,11 +37,7 @@ function CopyButton({ text, label }: { text: string; label: string }) {
   );
 }
 
-/**
- * The receipt as a provenance document. Fields reveal in order —
- * value, source, where, when, cost, fingerprint, verdict — so the eye
- * follows the chain of custody.
- */
+/** The receipt: value, source, where, when, cost, fingerprint, verdict — in that order. */
 export function ReceiptDocument({ receipt, display, animate = true }: { receipt: EvidenceReceipt; display: string; animate?: boolean }) {
   const reduced = useReducedMotion();
   const query = new URLSearchParams(receipt.params).toString();
@@ -79,35 +75,33 @@ export function ReceiptDocument({ receipt, display, animate = true }: { receipt:
       initial={play ? "hidden" : false}
       animate="show"
       variants={{ show: { transition: { staggerChildren: 0.045, delayChildren: 0.08 } } }}
-      className="registered relative flex flex-col bg-paper px-6 pt-8 pb-0 sm:px-8"
+      className="relative flex flex-col bg-paper px-6 pt-6 sm:px-7"
       aria-label={`Data receipt for ${receipt.label}`}
     >
-      <motion.header variants={item} className="flex items-baseline justify-between gap-4 border-b border-dashed pb-4">
+      <motion.header variants={item} className="flex items-start justify-between gap-4 border-b pb-4">
         <div>
-          <p className="display text-3xl leading-none">Data receipt</p>
-          <p className="eyebrow mt-2">{receipt.label}</p>
+          <p className="text-lg font-semibold tracking-tight">Data receipt</p>
+          <p className="mt-0.5 text-sm text-muted-foreground">{receipt.label}</p>
         </div>
-        <p className="text-right font-mono text-[10px] leading-relaxed tracking-wider text-muted-foreground uppercase">
-          № {serial}
-          <br />
-          {receipt.mode === "live" ? "Live response" : "Demo fixture"}
-        </p>
+        <span className={cn("rounded-full px-2.5 py-1 text-xs font-medium", receipt.mode === "live" ? "bg-pulse-soft text-pulse" : "bg-warn-soft text-warn")}>
+          {receipt.mode === "live" ? "Live response" : "Demo data"} · {serial}
+        </span>
       </motion.header>
 
       <motion.div variants={item} className="py-6">
-        <p className="eyebrow">Value</p>
-        <p className="mt-1 font-sans text-4xl font-semibold tracking-tight tabular sm:text-5xl">{display}</p>
+        <p className="text-sm text-muted-foreground">Value</p>
+        <p className="mt-1 text-4xl font-semibold tracking-tight tabular">{display}</p>
       </motion.div>
 
       <dl className="border-t">
         {rows.map(([label, value, mono]) => (
-          <motion.div variants={item} key={label} className="grid grid-cols-[8.5rem_1fr] gap-3 border-b border-dotted py-2.5 text-sm sm:grid-cols-[10rem_1fr]">
-            <dt className="eyebrow pt-0.5">{label}</dt>
+          <motion.div variants={item} key={label} className="grid grid-cols-[8.5rem_1fr] gap-3 border-b py-2.5 text-sm sm:grid-cols-[10rem_1fr]">
+            <dt className="text-muted-foreground">{label}</dt>
             <dd className={cn("min-w-0 break-words", mono && "font-mono text-[12px]")}>{value}</dd>
           </motion.div>
         ))}
         <motion.div variants={item} className="grid grid-cols-[8.5rem_1fr] gap-3 py-2.5 text-sm sm:grid-cols-[10rem_1fr]">
-          <dt className="eyebrow pt-0.5">Response integrity</dt>
+          <dt className="text-muted-foreground">Response hash</dt>
           <dd className="min-w-0">
             <span className="font-mono text-[11.5px] break-all">sha256:{receipt.responseHash}</span>
             <span className="mt-1 flex items-center gap-2">
@@ -120,8 +114,8 @@ export function ReceiptDocument({ receipt, display, animate = true }: { receipt:
 
       <motion.div
         variants={{
-          hidden: { opacity: 0, scale: 1.08, rotate: -3 },
-          show: { opacity: 1, scale: 1, rotate: 0, transition: { type: "spring", stiffness: 380, damping: 22, delay: 0.1 } },
+          hidden: { opacity: 0, y: 6 },
+          show: { opacity: 1, y: 0, transition: { duration: 0.35, delay: 0.1 } },
         }}
         className="my-6"
       >
@@ -130,7 +124,7 @@ export function ReceiptDocument({ receipt, display, animate = true }: { receipt:
 
       <motion.div variants={item} className="pb-6">
         <div className="flex items-center justify-between">
-          <p className="eyebrow">Reproduce this call</p>
+          <p className="text-sm font-medium">Reproduce this call</p>
           <CopyButton text={curl} label="Copy curl command" />
         </div>
         <pre className="mt-2 overflow-x-auto rounded-lg border bg-background p-3 font-mono text-[11px] leading-relaxed">{curl}</pre>
@@ -139,8 +133,6 @@ export function ReceiptDocument({ receipt, display, animate = true }: { receipt:
         </p>
       </motion.div>
 
-      {/* Tear-off edge */}
-      <div className="perforated -mx-6 h-1.5 rotate-180 bg-transparent sm:-mx-8" aria-hidden />
     </motion.article>
   );
 }
@@ -175,8 +167,8 @@ export function TruthReceipt({
           {!hideCue && (
             <span className="inline-flex items-center gap-2">
               <Verified status={receipt.verificationStatus} />
-              <span className="font-mono text-[10px] tracking-wider text-muted-foreground uppercase opacity-0 transition-opacity duration-200 group-hover/receipt:opacity-100 group-focus-visible/receipt:opacity-100">
-                View receipt →
+              <span className="text-xs text-muted-foreground opacity-0 transition-opacity duration-200 group-hover/receipt:opacity-100 group-focus-visible/receipt:opacity-100">
+                View receipt
               </span>
             </span>
           )}

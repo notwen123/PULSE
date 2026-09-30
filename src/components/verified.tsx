@@ -35,18 +35,17 @@ export function Verified({
           className
         )}
       >
-        <span className={cn("relative grid size-6 place-items-center rounded-full", ok ? "bg-pulse text-pulse-foreground" : "border border-current")}>
-          {ok && <span className="ring-out absolute inset-0 rounded-full border border-pulse" aria-hidden />}
+        <span className={cn("grid size-6 place-items-center rounded-full", ok ? "bg-pulse text-pulse-foreground" : "border border-current")}>
           <Icon className="size-3.5" strokeWidth={2.5} />
         </span>
-        <span className="font-mono text-[11px] font-semibold tracking-[0.14em] uppercase">{COPY[status].long}</span>
+        <span className="text-sm font-semibold">{COPY[status].long}</span>
       </div>
     );
   }
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 font-mono text-[10px] font-medium tracking-[0.12em] uppercase",
+        "inline-flex items-center gap-1 text-xs font-medium",
         ok ? "text-pulse" : status === "demo" ? "text-warn" : "text-muted-foreground",
         className
       )}
