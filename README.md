@@ -4,7 +4,7 @@
 
 # PULSE
 
-### The verification layer for tokenized markets
+### The verification layer for tokenized markets.
 
 **Every asset explained. Every number comes with a receipt.**
 
